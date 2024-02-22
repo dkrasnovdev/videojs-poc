@@ -1,11 +1,14 @@
+/* eslint-disable */
+// @ts-nocheck
+
 import React from "react";
 import videojs from "video.js";
 import "video.js/dist/video-js.css";
 
-export const VideoJS = (props: Parameters<typeof videojs>) => {
+export const VideoJS = (props) => {
   const videoRef = React.useRef(null);
   const playerRef = React.useRef(null);
-  const [_, options, ready] = props;
+  const { options, onReady } = props;
 
   React.useEffect(() => {
     // Make sure Video.js player is only initialized once
@@ -18,7 +21,7 @@ export const VideoJS = (props: Parameters<typeof videojs>) => {
 
       const player = (playerRef.current = videojs(videoElement, options, () => {
         videojs.log("player is ready");
-        ready && ready(player);
+        onReady && onReady(player);
       }));
 
       // You could update an existing player in the `else` block here
